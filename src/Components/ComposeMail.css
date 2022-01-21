@@ -1,0 +1,92 @@
+.compseMail {
+  position: absolute;
+  bottom: 0;
+  right: 50px;
+  box-shadow: 0px 8px 10px 1px rgb(0 0 0 / 14%),
+    0px 3px 14px 2px rgb(0 0 0 / 12%), 0px 5px 5px -3px rgb(0 0 0 / 20%);
+  background-color: white;
+  width: 40%;
+  /* height: 0%; */
+  max-width: 500px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  /* border: 1px solid whitesmoke; */
+  z-index: 999;
+}
+
+.composeMail__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #b2b2b2;
+  background-color: #404040;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 10px 15px;
+}
+
+.composeMail__header > h3 {
+  color: white;
+  font-size: 0.87rem;
+  letter-spacing: 0.2px;
+  font-weight: 500;
+}
+.composeMail__headCloseBtn:hover {
+  background-color: #737373;
+  color: white;
+}
+.composeMail__headCloseBtn {
+  cursor: pointer;
+  padding: 2px;
+}
+
+.compseMail > form {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.compseMail > form > input,
+.composeMail__message {
+  height: 30px;
+  padding: 5px;
+  border: none;
+  border-bottom: 1px solid whitesmoke;
+  outline-width: 0px;
+  font-size: 15px;
+}
+
+.composeMail__footerSend {
+  text-transform: capitalize;
+}
+
+.composeMail__headIcon {
+  display: flex;
+  align-items: center;
+}
+
+.composeMail__footer {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.composeMail__footer svg {
+  color: #5f6368;
+}
+
+.compseMail > form > .composeMail__message {
+  height: 200px !important;
+  border: none;
+  resize: none;
+  display: block;
+}
+
+.composeMail__errorMessage {
+  color: red;
+  background-color: transparent;
+  font-size: 12px;
+  text-align: right;
+}

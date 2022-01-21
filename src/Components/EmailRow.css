@@ -1,0 +1,60 @@
+.emailRow {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-bottom: 1px solid #eceff1;
+  cursor: pointer;
+}
+.emailRow:hover {
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0,
+    0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  /* border-top: 1px solid #eceff1; */
+}
+
+.emailRow__options {
+  display: flex;
+  align-items: center;
+  flex: 0;
+}
+
+.emailRow__title {
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 250px;
+  flex: 0.3;
+}
+.emailRow__message {
+  flex: 1;
+}
+.emailRow__message > h4 {
+  color: #000;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+  max-width: 600px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 5px 0 10px;
+}
+
+.emailRow__description {
+  color: #5f6368;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.emailRow__time {
+  color: #5f6368;
+  font-weight: 400;
+  font-size: 12px;
+  padding-right: 15px;
+  flex: auto;
+  text-align: right;
+  flex: 0.3;
+}

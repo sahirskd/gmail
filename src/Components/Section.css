@@ -1,0 +1,20 @@
+.emailList__section{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    min-width: 200px;
+    cursor: pointer;
+    transition: .1s all ease;
+}
+
+.emailList__section:not(.section--selected):hover{
+    border-bottom-width: 3px !important;
+    background-color: #2021240f;
+    color: #000 !important;
+}
+
+.emailList__section > h5{
+    font-weight: 500;
+    margin-left: 15px;
+    font-size: 14px;
+}

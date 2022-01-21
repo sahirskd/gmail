@@ -14,19 +14,22 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import PersonIcon from '@mui/icons-material/Person';
 import DuoIcon from '@mui/icons-material/Duo';
 import ChatIcon from '@mui/icons-material/Chat';
-import { openSendMessageDialog } from '../features/mailSlice';
-import { useDispatch } from 'react-redux';
+import { openSendMessageDialog, selectMailListCount } from '../features/mailSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Sidebar() {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const inboxCount = useSelector(selectMailListCount);
+
 
     return (
         <div className='sidebar'>
             <div className='compose__button_container'>
                 <Button onClick={() => dispatch(openSendMessageDialog())} className='compose__button'> <img src={ComposeIcon} /> <span>Compose</span></Button>
             </div>
-            <SidebarOption selected={true} title={"Inbox"} Icon={InboxIcon} number={5} />
+            <SidebarOption selected={true} title={"Inbox"} Icon={InboxIcon} number={inboxCount} />
             <SidebarOption selected={false} title={"Sent"} Icon={SendIcon} number={54} />
             <SidebarOption selected={false} title={"Snoozed"} Icon={WatchLaterIcon} number={4} />
             <SidebarOption selected={false} title={"Starred"} Icon={StarIcon} number={40} />

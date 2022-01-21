@@ -9,10 +9,14 @@ import PeopleIcon from '@mui/icons-material/People';
 import Section from './Section';
 import EmailRow from './EmailRow';
 import { db } from './firebase';
+import { useDispatch } from 'react-redux';
+import { updateMailListCount } from '../features/mailSlice';
 
 function EmailList() {
 
     const [emailList, setemailList] = useState([]);
+
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -20,9 +24,17 @@ function EmailList() {
         db.collection("mails").orderBy("timestamp", "desc").onSnapshot((snapshot) => setemailList(snapshot.docs.map((doc) => ({
             id: doc.id,
             data: doc.data(),
-        }))))
+        })
+        )))
+
+        // console.log(emailList.length);
 
     }, []);
+
+    useEffect(() => {
+        dispatch(updateMailListCount(emailList.length))
+    }, [emailList]);
+
 
 
 

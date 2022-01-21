@@ -1,18 +1,25 @@
-.app{
-    /* height: 100vh; */
+.app {
+  /* height: 100vh; */
 }
 
-.app__body{
-    display: flex;
-    height: 85vh;
+.app__body {
+  display: flex;
+  height: 85vh;
 }
 
-.sidebar{
-    flex: 0.18;
-    max-width: 300px;
-    padding-right: 15px;
+.sidebar {
+  flex: 0.18;
+  max-width: 300px;
+  padding-right: 15px;
 }
 
-.rightSideBar{
-    flex: 0.82;
+.rightSideBar {
+  flex: 0.82;
+  overflow: auto;
+}
+
+.emailList__sections {
+  position: sticky;
+  top: 0;
+  z-index: 99;
 }

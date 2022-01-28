@@ -26,18 +26,18 @@ function Header() {
                 <ArrowDropDownIcon className='hader__inputCaret' />
             </div>
             <div className='header__right'>
-            <IconButton>
+                <IconButton>
                     <AppsIcon />
-            </IconButton>
-            <IconButton>
+                </IconButton>
+                <IconButton>
                     <NotificationsIcon />
-            </IconButton>
-            <IconButton>
+                </IconButton>
+                <IconButton>
                     <HelpIcon />
-            </IconButton>
-            <IconButton >
-                <AccountCircleIcon fontSize="large" />
-            </IconButton>
+                </IconButton>
+                <IconButton >
+                    <AccountCircleIcon fontSize="large" />
+                </IconButton>
             </div>
         </div>
     )

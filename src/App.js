@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Header from './Components/Header'
 import Sidebar from './Components/Sidebar';
@@ -7,14 +7,29 @@ import { Routes, Route } from "react-router-dom";
 import EmailList from './Components/EmailList';
 import Mail from './Components/Mail';
 import ComposeMail from './Components/ComposeMail';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectSendMessageDialogIsOpen } from './features/mailSlice'
-import { selectUser } from './features/userSlice';
+import { selectUser, login } from './features/userSlice';
+import { auth } from './Components/firebase';
 
 function App() {
 
   const composeMailDialogIsOpen = useSelector(selectSendMessageDialogIsOpen);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        dispatch(login({
+          userName: user.displayName,
+          userEmail: user.email,
+          userPhoto: user.photoURL,
+        }))
+      }
+    })
+  }, []);
+
 
 
   return (

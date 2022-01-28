@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Sidebar() {
 
+
     const dispatch = useDispatch();
 
     const inboxCount = useSelector(selectMailListCount);
@@ -29,13 +30,13 @@ function Sidebar() {
             <div className='compose__button_container'>
                 <Button onClick={() => dispatch(openSendMessageDialog())} className='compose__button'> <img src={ComposeIcon} /> <span>Compose</span></Button>
             </div>
-            <SidebarOption selected={true} title={"Inbox"} Icon={InboxIcon} number={inboxCount} />
-            <SidebarOption selected={false} title={"Sent"} Icon={SendIcon} number={54} />
-            <SidebarOption selected={false} title={"Snoozed"} Icon={WatchLaterIcon} number={4} />
-            <SidebarOption selected={false} title={"Starred"} Icon={StarIcon} number={40} />
-            <SidebarOption selected={false} title={"Important"} Icon={LabelImportantIcon} number={9} />
-            <SidebarOption selected={false} title={"Draft"} Icon={InsertDriveFileIcon} number={56} />
-            <SidebarOption selected={false} title={"More"} Icon={ExpandMoreIcon} number={""} />
+            <SidebarOption selected={true} navigateTo="/" title={"Inbox"} Icon={InboxIcon} number={inboxCount} />
+            <SidebarOption selected={false} navigateTo="/" title={"Sent"} Icon={SendIcon} number={54} />
+            <SidebarOption selected={false} navigateTo="/" title={"Snoozed"} Icon={WatchLaterIcon} number={4} />
+            <SidebarOption selected={false} navigateTo="/" title={"Starred"} Icon={StarIcon} number={40} />
+            <SidebarOption selected={false} navigateTo="/" title={"Important"} Icon={LabelImportantIcon} number={9} />
+            <SidebarOption selected={false} navigateTo="/" title={"Draft"} Icon={InsertDriveFileIcon} number={56} />
+            <SidebarOption selected={false} navigateTo="/" title={"More"} Icon={ExpandMoreIcon} number={""} />
 
             <div className='sidebar__footer'>
                 <div className='sidebar__footerIcons'>

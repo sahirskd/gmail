@@ -33,7 +33,7 @@ function EmailList() {
 
     useEffect(() => {
         dispatch(updateMailListCount(emailList.length))
-    }, [emailList]);
+    }, [emailList, dispatch]);
 
 
 

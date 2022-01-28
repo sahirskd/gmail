@@ -1,0 +1,24 @@
+.login {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.login__button {
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.login__icon {
+  margin-right: 5px;
+}
+
+.login__container img {
+  max-width: 200px;
+  margin: 1rem auto;
+  display: block;
+}

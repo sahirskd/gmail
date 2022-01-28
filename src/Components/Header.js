@@ -9,9 +9,14 @@ import AppsIcon from '@mui/icons-material/Apps';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HelpIcon from '@mui/icons-material/Help';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { selectUser } from '../features/userSlice';
+import { useSelector } from 'react-redux';
 
 
 function Header() {
+
+    const user = useSelector(selectUser);
+
     return (
         <div className="header">
             <div className='header__left'>
@@ -36,7 +41,7 @@ function Header() {
                     <HelpIcon />
                 </IconButton>
                 <IconButton >
-                    <AccountCircleIcon fontSize="large" />
+                    <AccountCircleIcon src={user.userPhoto} fontSize="large" />
                 </IconButton>
             </div>
         </div>

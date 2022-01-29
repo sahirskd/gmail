@@ -58,3 +58,7 @@
   text-align: right;
   flex: 0.3;
 }
+
+.emailRow__checkedStar {
+  color: #f4c84b;
+}

@@ -32,7 +32,7 @@ function Header() {
                 <IconButton>
                     <MenuIcon />
                 </IconButton>
-                <img src={GmailLogo} />
+                <img alt="logo" src={GmailLogo} />
             </div>
             <div className='header__middle'>
                 <SearchIcon />

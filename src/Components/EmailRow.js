@@ -1,16 +1,28 @@
-import { LabelImportantOutlined, StarBorderOutlined } from '@mui/icons-material';
-import { Checkbox, IconButton } from '@mui/material';
-import React from 'react';
+import { Star, StarBorderOutlined } from '@mui/icons-material';
+import { Checkbox } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectMail } from '../features/mailSlice';
 import './EmailRow.css'
 
-function EmailRow({ mykey, time, description, subject, title, }) {
+function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, title, }) {
 
     const navigate = useNavigate();
 
+    const [checkedBox, setcheckedBox] = useState(checkAll);
+
     const dispatch = useDispatch();
+
+    const checkBoxChanged = (e) => {
+        setcheckedBox(!checkedBox);
+        e.stopPropagation();
+    }
+
+    useEffect(() => {
+        setcheckedBox(checkAll)
+    }, [checkAll]);
+
 
     const openMail = () => {
         dispatch(selectMail({
@@ -22,13 +34,10 @@ function EmailRow({ mykey, time, description, subject, title, }) {
     return (
         <div key={mykey} onClick={openMail} className='emailRow' >
             <div className='emailRow__options'>
-                <Checkbox size="small" />
-                <IconButton>
-                    <StarBorderOutlined fontSize="small" />
-                </IconButton>
-                <IconButton>
-                    <LabelImportantOutlined fontSize="small" />
-                </IconButton>
+                <Checkbox onClick={checkBoxChanged} checked={checkedBox} size="small" />
+
+                <Checkbox onClick={(e) => e.stopPropagation()} icon={<StarBorderOutlined />} checkedIcon={<Star className="emailRow__checkedStar" />} size="small" />
+
             </div>
 
             <h3 className='emailRow__title'>{title}</h3>

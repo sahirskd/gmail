@@ -15,6 +15,10 @@ export const mailSlice = createSlice({
             state.selectedMail = action.payload;
         },
 
+        updateSelectedMail: (state) => {
+            state.selectedMail = null;
+        },
+
         updateMailListCount: (state, action) => {
             state.mailListCount = action.payload;
         },
@@ -31,7 +35,7 @@ export const mailSlice = createSlice({
 })
 
 
-export const { selectMail, updateMailListCount, openSendMessageDialog, closeSendMessageDialog } = mailSlice.actions;
+export const { selectMail, updateSelectedMail, updateMailListCount, openSendMessageDialog, closeSendMessageDialog } = mailSlice.actions;
 
 export const selectSendMessageDialogIsOpen = (state) => state.mail.sendMessageDialogIsOpen;
 

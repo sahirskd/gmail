@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./Mail.css";
 import { IconButton, Tooltip } from "@mui/material";
 import {
@@ -17,17 +17,46 @@ import {
     WatchLater,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { openSelectedMail } from "../features/mailSlice";
-import { useSelector } from "react-redux";
+import { openSelectedMail, updateSelectedMail } from "../features/mailSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { db } from "./firebase";
 
 function Mail() {
     const navigate = useNavigate();
+    const isMountedRef = useRef(null);
+
+    const dispatch = useDispatch();
 
     const printMail = () => {
         window.print();
     }
+    const mailData = useSelector(openSelectedMail);
 
-    const mailData = useSelector(openSelectedMail)
+    const deleteMail = async () => {
+
+        await db.collection("mails").doc(mailData.mykey).delete().then(() => {
+            if (isMountedRef.current) {
+                dispatch(updateSelectedMail());
+            }
+            console.log("Message deleted!");
+        }).catch((error) => {
+            console.error("Error removing message: ", error);
+        });
+    }
+
+    useEffect(() => {
+        isMountedRef.current = true;
+        if (!mailData) {
+            navigate("/")
+        }
+
+        return () => {
+            isMountedRef.current = false;
+        };
+    }, [mailData, navigate]);
+
+
+
 
     return (
         <div className="mail">
@@ -49,7 +78,7 @@ function Mail() {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Delete">
-                        <IconButton>
+                        <IconButton onClick={deleteMail} >
                             <Delete fontSize="small" />
                         </IconButton>
                     </Tooltip>

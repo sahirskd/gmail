@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './EmailList.css'
 import { Checkbox, IconButton, Tooltip } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import RedoIcon from '@mui/icons-material/Redo';
 import { ChevronLeft, ChevronRight, KeyboardHide, MoreVert, Settings, LabelImportant, Refresh } from '@mui/icons-material';
 import Inbox from '@mui/icons-material/Inbox';
 import PeopleIcon from '@mui/icons-material/People';
@@ -14,21 +13,19 @@ import { updateMailListCount } from '../features/mailSlice';
 
 function EmailList() {
 
+    const [checkAll, setcheckAll] = useState(false);
+
     const [emailList, setemailList] = useState([]);
 
     const dispatch = useDispatch();
 
 
     useEffect(() => {
-
         db.collection("mails").orderBy("timestamp", "desc").onSnapshot((snapshot) => setemailList(snapshot.docs.map((doc) => ({
             id: doc.id,
             data: doc.data(),
         })
         )))
-
-        // console.log(emailList.length);
-
     }, []);
 
     useEffect(() => {
@@ -43,7 +40,7 @@ function EmailList() {
             <div className='emailList__settings'>
                 <div className='emailList__settingsLeft'>
                     <Tooltip title="Select all">
-                        <Checkbox size='small' />
+                        <Checkbox checked={checkAll} onChange={() => setcheckAll(!checkAll)} size='small' />
                     </Tooltip>
                     <IconButton>
                         <ArrowDropDownIcon fontSize="small" />
@@ -96,6 +93,8 @@ function EmailList() {
                         <EmailRow
                             mykey={id}
                             key={id}
+                            checkAll={checkAll}
+                            setcheckAll={setcheckAll}
                             title={recipients}
                             subject={subject}
                             description={message}

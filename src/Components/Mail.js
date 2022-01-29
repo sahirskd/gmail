@@ -10,7 +10,6 @@ import {
     Error,
     Label,
     LabelImportant,
-    LocalOffer,
     MoreVert,
     MoveToInbox,
     Print,
@@ -24,6 +23,9 @@ import { useSelector } from "react-redux";
 function Mail() {
     const navigate = useNavigate();
 
+    const printMail = () => {
+        window.print();
+    }
 
     const mailData = useSelector(openSelectedMail)
 
@@ -85,7 +87,7 @@ function Mail() {
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Print">
-                        <IconButton>
+                        <IconButton onClick={printMail}>
                             <Print fontSize="small" />
                         </IconButton>
                     </Tooltip>

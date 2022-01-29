@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './EmailList.css'
-import { Checkbox, IconButton } from '@mui/material';
+import { Checkbox, IconButton, Tooltip } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import RedoIcon from '@mui/icons-material/Redo';
-import { ChevronLeft, ChevronRight, KeyboardHide, MoreVert, Settings, LocalOffer, LabelImportant } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, KeyboardHide, MoreVert, Settings, LabelImportant } from '@mui/icons-material';
 import Inbox from '@mui/icons-material/Inbox';
 import PeopleIcon from '@mui/icons-material/People';
 import Section from './Section';
@@ -42,31 +42,44 @@ function EmailList() {
         <div className='emailList'>
             <div className='emailList__settings'>
                 <div className='emailList__settingsLeft'>
-
-                    <Checkbox size='small' />
+                    <Tooltip title="Select all">
+                        <Checkbox size='small' />
+                    </Tooltip>
                     <IconButton>
                         <ArrowDropDownIcon fontSize="small" />
                     </IconButton>
-                    <IconButton>
-                        <RedoIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton>
-                        <MoreVert fontSize="small" />
-                    </IconButton>
+                    <Tooltip title="Undo">
+                        <IconButton>
+                            <RedoIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="More">
+                        <IconButton>
+                            <MoreVert fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                 </div>
                 <div className='emailList__settingsRight'>
-                    <IconButton>
-                        <ChevronLeft fontSize="small" />
-                    </IconButton>
-                    <IconButton>
-                        <ChevronRight fontSize="small" />
-                    </IconButton>
-                    <IconButton>
-                        <KeyboardHide fontSize="small" />
-                    </IconButton>
-                    <IconButton>
-                        <Settings fontSize="small" />
-                    </IconButton>
+                    <Tooltip title="Previous">
+                        <IconButton>
+                            <ChevronLeft fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Next">
+                        <IconButton>
+                            <ChevronRight fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Hide Keyboard">
+                        <IconButton>
+                            <KeyboardHide fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Settings">
+                        <IconButton>
+                            <Settings fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </div>
             <div className='emailList__sections'>

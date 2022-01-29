@@ -1,0 +1,35 @@
+.userPopup__userDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.userPopup__userAvatar {
+  height: 80px !important;
+  width: 80px !important;
+}
+
+.userPopup__name {
+  margin: 15px 0 5px 0;
+  color: #202124;
+  letter-spacing: 0.29px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.userPopup__email {
+  color: #5f6368;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.userPopup__logout {
+  color: #3c4043 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #dadce0 !important;
+  display: flex !important;
+  margin: 8px auto 0 !important;
+  text-transform: none !important;
+}

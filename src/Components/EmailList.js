@@ -3,7 +3,7 @@ import './EmailList.css'
 import { Checkbox, IconButton, Tooltip } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import RedoIcon from '@mui/icons-material/Redo';
-import { ChevronLeft, ChevronRight, KeyboardHide, MoreVert, Settings, LabelImportant } from '@mui/icons-material';
+import { ChevronLeft, ChevronRight, KeyboardHide, MoreVert, Settings, LabelImportant, Refresh } from '@mui/icons-material';
 import Inbox from '@mui/icons-material/Inbox';
 import PeopleIcon from '@mui/icons-material/People';
 import Section from './Section';
@@ -48,9 +48,9 @@ function EmailList() {
                     <IconButton>
                         <ArrowDropDownIcon fontSize="small" />
                     </IconButton>
-                    <Tooltip title="Undo">
+                    <Tooltip title="Refresh">
                         <IconButton>
-                            <RedoIcon fontSize="small" />
+                            <Refresh fontSize="small" />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="More">

@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { closeSendMessageDialog } from '../features/mailSlice';
 import { doc, setDoc, getDoc, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from './firebase'
-// import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 function ComposeMail() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -25,7 +24,7 @@ function ComposeMail() {
             timestamp: serverTimestamp()
         }
 
-        await db.collection('mails').add(formData)
+        await db.collection('mails').add(formData);
 
         // db.collection('mails').onSnapshot(snapshot => {
         //     console.log("fire data", snapshot.docs.map(doc => doc.data()))

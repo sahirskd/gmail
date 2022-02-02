@@ -39,7 +39,7 @@ function EmailList() {
         <div className='emailList'>
             <div className='emailList__settings'>
                 <div className='emailList__settingsLeft'>
-                    <Tooltip title="Select all">
+                    <Tooltip title={checkAll ? "Unselect all" : "Select all"}>
                         <Checkbox checked={checkAll} onChange={() => setcheckAll(!checkAll)} size='small' />
                     </Tooltip>
                     <IconButton>
@@ -100,7 +100,8 @@ function EmailList() {
                             senderMail={senderMail}
                             subject={subject}
                             description={message}
-                            time={new Date(timestamp?.seconds * 1000).toUTCString()}
+                            // time={new Date(timestamp?.seconds * 1000).toUTCString()}
+                            time={new Date(timestamp?.seconds * 1000).toLocaleString('en-IN', { timeZone: 'IST' })}
                         />
                     ))
                     }

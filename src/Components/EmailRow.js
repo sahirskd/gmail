@@ -1,5 +1,5 @@
 import { Star, StarBorderOutlined } from '@mui/icons-material';
-import { Checkbox } from '@mui/material';
+import { Checkbox, Tooltip } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,14 @@ function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, se
 
     const [checkedBox, setcheckedBox] = useState(checkAll);
 
+    const [starred, setstarred] = useState(false);
+
     const dispatch = useDispatch();
+
+    const hadlestarClick = (e) => {
+        e.stopPropagation()
+        setstarred(!starred)
+    }
 
     const checkBoxChanged = (e) => {
         setcheckedBox(!checkedBox);
@@ -34,9 +41,14 @@ function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, se
     return (
         <div key={mykey} onClick={openMail} className='emailRow' >
             <div className='emailRow__options'>
-                <Checkbox onClick={checkBoxChanged} checked={checkedBox} size="small" />
+                <Tooltip title={checkedBox ? "Selected" : "Not selected"}>
+                    <Checkbox onClick={checkBoxChanged} checked={checkedBox} size="small" />
+                </Tooltip>
 
-                <Checkbox onClick={(e) => e.stopPropagation()} icon={<StarBorderOutlined />} checkedIcon={<Star className="emailRow__checkedStar" />} size="small" />
+                <Tooltip title={starred ? "Starred" : "Not Starred"}>
+                    <Checkbox onClick={hadlestarClick} icon={<StarBorderOutlined />} checkedIcon={<Star className="emailRow__checkedStar" />} size="small" />
+                </Tooltip>
+
 
             </div>
 

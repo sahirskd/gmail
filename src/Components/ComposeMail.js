@@ -3,8 +3,9 @@ import { Close, Delete, Minimize } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import './ComposeMail.css'
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeSendMessageDialog } from '../features/mailSlice';
+import { selectUser } from '../features/userSlice';
 import { serverTimestamp } from "firebase/firestore";
 import { db } from './firebase'
 
@@ -13,12 +14,17 @@ function ComposeMail() {
 
     const dispatch = useDispatch();
 
+    const user = useSelector(selectUser);
+
 
     const composeSubmit = async (data) => {
         // console.log(data);
 
         const formData = {
             recipients: data.Recipients,
+            sender: user.userName,
+            senderPhoto: user.userPhoto,
+            senderMail: user.userEmail,
             subject: data.Subject,
             message: data.Message,
             timestamp: serverTimestamp()

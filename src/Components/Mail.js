@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import "./Mail.css";
-import { IconButton, Tooltip } from "@mui/material";
+import { Avatar, IconButton, Tooltip } from "@mui/material";
 import {
-    AccountCircle,
     ArrowBack,
     CheckCircle,
     Delete,
@@ -133,9 +132,10 @@ function Mail() {
 
                 <div className="mail__senderDetails">
                     <div className="mail__iconTitle">
-                        <AccountCircle fontSize="large" />
+                        <Avatar src={mailData?.senderPhoto} />
+                        <p className="mail__senderName">{mailData?.sender}</p>
                         <LabelImportant fontSize="small" className="bodyHeader__icon" />
-                        <p>{mailData?.title}</p>
+                        <p>&lt;{mailData?.senderMail}&gt;</p>
 
                     </div>
                     <p>{mailData?.time}</p>

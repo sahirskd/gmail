@@ -89,13 +89,15 @@ function EmailList() {
 
             <div className='emailList__row'>
                 <div className='emailrow__Items'>
-                    {emailList.map(({ id, data: { message, recipients, subject, timestamp } }) => (
+                    {emailList.map(({ id, data: { message, subject, timestamp, sender, senderMail, senderPhoto } }) => (
                         <EmailRow
                             mykey={id}
                             key={id}
                             checkAll={checkAll}
                             setcheckAll={setcheckAll}
-                            title={recipients}
+                            sender={sender}
+                            senderPhoto={senderPhoto}
+                            senderMail={senderMail}
                             subject={subject}
                             description={message}
                             time={new Date(timestamp?.seconds * 1000).toUTCString()}

@@ -45,6 +45,7 @@
 
 .bodyHeader__icon {
   color: #e8ab02;
+  margin: 0 10px;
 }
 
 .mail__message {
@@ -68,4 +69,11 @@
 .mail__iconTitle {
   display: flex;
   align-items: center;
+}
+
+.mail__senderName {
+  font-size: 15px;
+  color: #202124;
+  font-weight: 500;
+  margin-left: 10px;
 }

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { selectMail } from '../features/mailSlice';
 import './EmailRow.css'
 
-function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, title, }) {
+function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, sender, senderMail, senderPhoto }) {
 
     const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, ti
 
     const openMail = () => {
         dispatch(selectMail({
-            mykey, time, description, subject, title
+            mykey, time, description, subject, sender, senderMail, senderPhoto
         }))
         navigate("/Mail")
     }
@@ -40,7 +40,7 @@ function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, ti
 
             </div>
 
-            <h3 className='emailRow__title'>{title}</h3>
+            <h3 className='emailRow__title'>{sender}</h3>
 
             <div className='emailRow__message'>
                 <h4>

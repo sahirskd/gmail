@@ -20,7 +20,7 @@
   flex-direction: column;
   margin: 30px;
   padding: 20px;
-  height: 100vh;
+  min-height: 60vh;
   background-color: white;
 }
 

@@ -55,7 +55,6 @@ function ProfileModal({ closeUserModal, anchorEl, open }) {
         >
             <div className='userPopup__userDetails'>
                 <Avatar className="userPopup__userAvatar" src={user.userPhoto} fontSize="large" />
-                {console.log(user.userPhoto)}
                 <p className='userPopup__name'>{user.userName}</p>
                 <p className='userPopup__email'>{user.userEmail}</p>
             </div>

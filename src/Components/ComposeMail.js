@@ -60,6 +60,7 @@ function ComposeMail() {
             <form onSubmit={handleSubmit(composeSubmit)}>
                 <input type="email" placeholder='Recipients' {...register("Recipients", { required: "Recipient is required" })} />
                 {errors.Recipients && <p className='composeMail__errorMessage'>{errors.Recipients.message}</p>}
+
                 <input onKeyUp={(e) => setMailSub(e.target.value)} name='Subject' type="text" placeholder='Subject' {...register("Subject", { required: "Subject is required" })} />
                 {errors.Subject && <p className='composeMail__errorMessage'>{errors.Subject.message}</p>}
 

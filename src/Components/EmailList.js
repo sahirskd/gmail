@@ -101,7 +101,7 @@ function EmailList() {
                             subject={subject}
                             description={message}
                             // time={new Date(timestamp?.seconds * 1000).toUTCString()}
-                            time={new Date(timestamp?.seconds * 1000).toLocaleString('en-IN', { timeZone: 'UTC' })}
+                            time={new Date(timestamp?.seconds * 1000).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
                         />
                     ))
                     }

@@ -8,6 +8,7 @@ export const mailSlice = createSlice({
         composeModalIsMin: true,
         selectedMail: null,
         mailListCount: 0,
+        isSideBarExpand: false,
     },
 
     reducers: {
@@ -41,12 +42,14 @@ export const mailSlice = createSlice({
             state.composeModalIsMin = false;
         },
 
-
+        toggleSideBar: state => {
+            state.isSideBarExpand = !state.isSideBarExpand;
+        },
     },
 })
 
 
-export const { selectMail, updateSelectedMail, updateMailListCount, openSendMessageDialog, closeSendMessageDialog, minimizeComposeModal, maximizeComposeModal } = mailSlice.actions;
+export const { selectMail, updateSelectedMail, updateMailListCount, openSendMessageDialog, closeSendMessageDialog, minimizeComposeModal, maximizeComposeModal, toggleSideBar } = mailSlice.actions;
 
 export const selectcomposeDialogIsOpen = (state) => state.mail.composeDialogIsOpen;
 
@@ -55,5 +58,7 @@ export const selectComposeModalIsMin = (state) => state.mail.composeModalIsMin;
 export const openSelectedMail = (state) => state.mail.selectedMail;
 
 export const selectMailListCount = (state) => state.mail.mailListCount;
+
+export const selectIsExpandSideBar = (state) => state.mail.isSideBarExpand;
 
 export default mailSlice.reducer;

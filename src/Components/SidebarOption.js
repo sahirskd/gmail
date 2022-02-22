@@ -10,8 +10,8 @@ function SidebarOption({ title, Icon, number, selected, navigateTo }) {
     return (
         <div onClick={() => navigate(navigateTo)} className={selected ? "sidebar__option active" : "sidebar__option"}>
             <Icon fontSize="small" />
-            <h4>{title}</h4>
-            <p>{number}</p>
+            <h4 className='sidebar__opTitle'>{title}</h4>
+            <p className='sidebar__opNumber'>{number}</p>
         </div>
     )
 

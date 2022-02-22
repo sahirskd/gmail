@@ -1,28 +1,37 @@
-
-.compose__button{
-    border-radius: 24px!important;
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
-    margin-left: 10px;
-    text-transform: capitalize !important;
-    
+.compose__button {
+  border-radius: 24px !important;
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  margin-left: 10px;
+  text-transform: capitalize !important;
 }
 
-.compose__button_container{
-    margin: 15px 10px;
+.sidebar--shrinked .compose__button > span {
+  display: none;
+}
+.sidebar--shrinked .compose__button {
+  min-width: auto;
 }
 
-.compose__button > span{
-    padding-left: 10px;
-    padding-right: 10px;
-    color: #5f6368;
+.compose__button_container {
+  margin: 15px 10px;
+}
+
+.compose__button > span {
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #5f6368;
 }
 
 .compose__button:hover {
-    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%) !important;
-    background-color: #fafafb;
+  box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%) !important;
+  background-color: #fafafb;
 }
 
-.sidebar__footer{
-    display: flex;
-    justify-content: center;
+.sidebar:not(.sidebar--shrinked) .sidebar__footer {
+  display: flex;
+  justify-content: center;
+}
+.sidebar.sidebar--shrinked .sidebar__footer {
+  display: flex;
+  margin-left: 15px;
 }

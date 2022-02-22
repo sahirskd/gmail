@@ -10,7 +10,7 @@ import { serverTimestamp } from "firebase/firestore";
 import { db } from './firebase'
 
 function ComposeMail() {
-    const { register, handleSubmit, getValues, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
     const dispatch = useDispatch();
 

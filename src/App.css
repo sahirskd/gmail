@@ -4,17 +4,31 @@
 
 .app__body {
   display: flex;
-  height: 85vh;
+  height: 86vh;
+  justify-content: space-between;
 }
 
 .sidebar {
+  transition: 0.3s all ease;
+}
+
+.sidebar:not(.sidebar--shrinked) {
   flex: 0.18;
   max-width: 300px;
   padding-right: 15px;
 }
 
+.sidebar.sidebar--shrinked {
+  padding-right: 10px;
+}
+
+.sidebar.sidebar--shrinked + .rightSideBar {
+  flex: 1 !important;
+}
+
 .rightSideBar {
   flex: 0.82;
+  transition: 0.3s all ease;
   overflow: auto;
 }
 

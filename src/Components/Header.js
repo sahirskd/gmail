@@ -9,17 +9,20 @@ import AppsIcon from '@mui/icons-material/Apps';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HelpIcon from '@mui/icons-material/Help';
 import { selectUser } from '../features/userSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileModal from './ProfileModal';
+import { toggleSideBar } from '../features/mailSlice'
 
 
 function Header() {
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const dispatch = useDispatch();
     const open = Boolean(anchorEl);
     const openUserModal = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const closeUserModal = () => {
         setAnchorEl(null);
     };
@@ -29,7 +32,7 @@ function Header() {
     return (
         <div className="header">
             <div className='header__left'>
-                <IconButton>
+                <IconButton onClick={() => dispatch(toggleSideBar())}>
                     <MenuIcon />
                 </IconButton>
                 <img alt="logo" src={GmailLogo} />

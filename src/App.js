@@ -8,13 +8,13 @@ import EmailList from './Components/EmailList';
 import Mail from './Components/Mail';
 import ComposeMail from './Components/ComposeMail';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSendMessageDialogIsOpen } from './features/mailSlice'
+import { selectcomposeDialogIsOpen } from './features/mailSlice'
 import { selectUser, login } from './features/userSlice';
 import { auth } from './Components/firebase';
 
 function App() {
 
-  const composeMailDialogIsOpen = useSelector(selectSendMessageDialogIsOpen);
+  const composeMailDialogIsOpen = useSelector(selectcomposeDialogIsOpen);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 

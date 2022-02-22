@@ -1,20 +1,24 @@
-import React from 'react';
-import { Close, Delete, Minimize } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Close, Delete, Minimize, Maximize } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import './ComposeMail.css'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSendMessageDialog } from '../features/mailSlice';
+import { closeSendMessageDialog, minimizeComposeModal, maximizeComposeModal, selectComposeModalIsMin } from '../features/mailSlice';
 import { selectUser } from '../features/userSlice';
 import { serverTimestamp } from "firebase/firestore";
 import { db } from './firebase'
 
 function ComposeMail() {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm();
 
     const dispatch = useDispatch();
 
+    const [mailSub, setMailSub] = useState("")
+
     const user = useSelector(selectUser);
+
+    const dialogIsMinimized = useSelector(selectComposeModalIsMin);
 
 
     const composeSubmit = async (data) => {
@@ -41,18 +45,22 @@ function ComposeMail() {
     }
 
     return (
-        <div className='compseMail'>
+        <div className={`compseMail ${dialogIsMinimized ? "composeMail--minimize" : "composeMail--maximize"}`}>
             <div className='composeMail__header'>
-                <h3>New Message</h3>
+                <h3>{mailSub ? mailSub : "New Message"}</h3>
                 <div className='composeMail__headIcon'>
-                    <Minimize className='composeMail__headCloseBtn' fontSize="small" />
+                    {dialogIsMinimized ? (
+                        <Maximize onClick={() => dispatch(maximizeComposeModal())} className='composeMail__headCloseBtn' fontSize="small" />
+                    ) : (
+                        <Minimize onClick={() => dispatch(minimizeComposeModal())} className='composeMail__headCloseBtn' fontSize="small" />
+                    )}
                     <Close className='composeMail__headCloseBtn' onClick={() => dispatch(closeSendMessageDialog())} fontSize="small" />
                 </div>
             </div>
             <form onSubmit={handleSubmit(composeSubmit)}>
                 <input type="email" placeholder='Recipients' {...register("Recipients", { required: "Recipient is required" })} />
                 {errors.Recipients && <p className='composeMail__errorMessage'>{errors.Recipients.message}</p>}
-                <input name='Subject' type="text" placeholder='Subject' {...register("Subject", { required: "Subject is required" })} />
+                <input onKeyUp={(e) => setMailSub(e.target.value)} name='Subject' type="text" placeholder='Subject' {...register("Subject", { required: "Subject is required" })} />
                 {errors.Subject && <p className='composeMail__errorMessage'>{errors.Subject.message}</p>}
 
                 <textarea name='Message' type="text" placeholder='Message...' className='composeMail__message' {...register("Message", { required: "Message is required" })} />
@@ -60,7 +68,7 @@ function ComposeMail() {
 
                 <div className='composeMail__footer'>
                     <Button className='composeMail__footerSend' type="submit" variant="contained">Send</Button>
-                    <IconButton >
+                    <IconButton onClick={() => dispatch(closeSendMessageDialog())}>
                         <Delete className='composeMail__deleteIcon' />
                     </IconButton>
                 </div>

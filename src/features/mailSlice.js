@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const mailSlice = createSlice({
     name: 'mail',
     initialState: {
-        sendMessageDialogIsOpen: false,
+        composeDialogIsOpen: false,
+        composeModalIsMin: true,
         selectedMail: null,
         mailListCount: 0,
     },
@@ -24,20 +25,32 @@ export const mailSlice = createSlice({
         },
 
         openSendMessageDialog: state => {
-            state.sendMessageDialogIsOpen = true;
+            state.composeDialogIsOpen = true;
+            state.composeModalIsMin = false;
         },
 
         closeSendMessageDialog: state => {
-            state.sendMessageDialogIsOpen = false;
+            state.composeDialogIsOpen = false;
         },
+
+        minimizeComposeModal: state => {
+            state.composeModalIsMin = true;
+        },
+
+        maximizeComposeModal: state => {
+            state.composeModalIsMin = false;
+        },
+
 
     },
 })
 
 
-export const { selectMail, updateSelectedMail, updateMailListCount, openSendMessageDialog, closeSendMessageDialog } = mailSlice.actions;
+export const { selectMail, updateSelectedMail, updateMailListCount, openSendMessageDialog, closeSendMessageDialog, minimizeComposeModal, maximizeComposeModal } = mailSlice.actions;
 
-export const selectSendMessageDialogIsOpen = (state) => state.mail.sendMessageDialogIsOpen;
+export const selectcomposeDialogIsOpen = (state) => state.mail.composeDialogIsOpen;
+
+export const selectComposeModalIsMin = (state) => state.mail.composeModalIsMin;
 
 export const openSelectedMail = (state) => state.mail.selectedMail;
 

@@ -8,7 +8,7 @@ export const mailSlice = createSlice({
         composeModalIsMin: true,
         selectedMail: null,
         mailListCount: 0,
-        isSideBarExpand: false,
+        isSideBarExpand: true,
     },
 
     reducers: {

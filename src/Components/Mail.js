@@ -51,22 +51,21 @@ function Mail() {
         var starId = e.target.id;
         var isStarred = e.target.checked;
         // console.log(e)
+        setStarredIcon(isStarred)
+        dispatch(selectMail({
+            mykey: mailData?.mykey,
+            time: mailData?.mykey,
+            description: mailData?.description,
+            subject: mailData?.subject,
+            sender: mailData?.sender,
+            senderMail: mailData?.senderMail,
+            senderPhoto: mailData?.senderPhoto,
+            starred: isStarred
+        }))
         db.collection("mails").doc(starId).set({
             starred: isStarred
         }, { merge: true })
             .then(() => {
-                setStarredIcon(isStarred)
-                dispatch(selectMail({
-                    mykey: mailData?.mykey,
-                    time: mailData?.mykey,
-                    description: mailData?.description,
-                    subject: mailData?.subject,
-                    sender: mailData?.sender,
-                    senderMail: mailData?.senderMail,
-                    senderPhoto: mailData?.senderPhoto,
-                    starred: isStarred
-
-                }))
                 // console.log("Starred successfully!");
             })
             .catch((error) => {

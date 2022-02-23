@@ -89,7 +89,7 @@ function EmailList() {
 
             <div className='emailList__row'>
                 <div className='emailrow__Items'>
-                    {emailList.map(({ id, data: { message, subject, timestamp, sender, senderMail, senderPhoto } }) => (
+                    {emailList.map(({ id, data: { message, subject, timestamp, sender, senderMail, senderPhoto, starred } }) => (
                         <EmailRow
                             mykey={id}
                             key={id}
@@ -100,6 +100,7 @@ function EmailList() {
                             senderMail={senderMail}
                             subject={subject}
                             description={message}
+                            starred={starred}
                             // time={new Date(timestamp?.seconds * 1000).toUTCString()}
                             time={new Date(timestamp?.seconds * 1000).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
                         />

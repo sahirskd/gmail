@@ -31,10 +31,18 @@ function ComposeMail() {
             senderMail: user.userEmail,
             subject: data.Subject,
             message: data.Message,
+            starred: false,
             timestamp: serverTimestamp()
         }
 
-        db.collection('mails').add(formData);
+        db.collection('mails').add(formData)
+            .then(() => {
+                // console.log("Document successfully written!");
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error);
+                alert("Error writing document: ", error)
+            });
 
         // db.collection('mails').onSnapshot(snapshot => {
         //     console.log("fire data", snapshot.docs.map(doc => doc.data()))

@@ -1,26 +1,29 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Mail.css";
-import { Avatar, IconButton, Tooltip } from "@mui/material";
+import { Avatar, Checkbox, IconButton, Tooltip } from "@mui/material";
 import {
     ArrowBack,
     CheckCircle,
     Delete,
     Email,
     Error,
-    Label,
     LabelImportant,
     MoreVert,
     MoveToInbox,
     Print,
+    Star,
+    StarBorderOutlined,
     UnfoldMore,
     WatchLater,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { openSelectedMail, updateSelectedMail } from "../features/mailSlice";
+import { openSelectedMail, selectMail, updateSelectedMail } from "../features/mailSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { db } from "./firebase";
 
 function Mail() {
+    const [starredIcon, setStarredIcon] = useState(false);
+
     const navigate = useNavigate();
     const isMountedRef = useRef(null);
 
@@ -41,6 +44,36 @@ function Mail() {
         }).catch((error) => {
             console.error("Error removing message: ", error);
         });
+    }
+
+    const hadlestarClick = (e) => {
+        e.stopPropagation()
+        var starId = e.target.id;
+        var isStarred = e.target.checked;
+        // console.log(e)
+        db.collection("mails").doc(starId).set({
+            starred: isStarred
+        }, { merge: true })
+            .then(() => {
+                setStarredIcon(isStarred)
+                dispatch(selectMail({
+                    mykey: mailData?.mykey,
+                    time: mailData?.mykey,
+                    description: mailData?.description,
+                    subject: mailData?.subject,
+                    sender: mailData?.sender,
+                    senderMail: mailData?.senderMail,
+                    senderPhoto: mailData?.senderPhoto,
+                    starred: isStarred
+
+                }))
+                // console.log("Starred successfully!");
+            })
+            .catch((error) => {
+                console.error("Error staring: ", error);
+            });
+
+
     }
 
     useEffect(() => {
@@ -91,10 +124,8 @@ function Mail() {
                             <WatchLater fontSize="small" />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Labels">
-                        <IconButton>
-                            <Label fontSize="small" />
-                        </IconButton>
+                    <Tooltip title={starredIcon ? "Starred" : "Unstarred"}>
+                        <Checkbox checked={mailData?.starred ? true : false} onClick={hadlestarClick} id={mailData?.mykey} icon={<StarBorderOutlined />} checkedIcon={<Star className="emailRow__checkedStar" />} size="small" />
                     </Tooltip>
                     <Tooltip title="Add to tasks">
                         <IconButton>

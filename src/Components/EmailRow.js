@@ -4,26 +4,40 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectMail } from '../features/mailSlice';
+import { db } from './firebase'
 import './EmailRow.css'
 
-function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, sender, senderMail, senderPhoto }) {
+function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, sender, senderMail, senderPhoto, starred }) {
 
     const navigate = useNavigate();
 
     const [checkedBox, setcheckedBox] = useState(checkAll);
 
-    const [starred, setstarred] = useState(false);
+    const [starredIcon, setStarredIcon] = useState(false);
 
     const dispatch = useDispatch();
 
     const hadlestarClick = (e) => {
         e.stopPropagation()
-        setstarred(!starred)
+        var starId = e.target.id;
+        var isStarred = e.target.checked;
+        setStarredIcon(isStarred)
+        // console.log(e)
+        db.collection("mails").doc(starId).set({
+            starred: isStarred
+        }, { merge: true })
+            .then(() => {
+                // console.log("Starred successfully!");
+            })
+            .catch((error) => {
+                console.error("Error staring: ", error);
+            });
     }
 
     const checkBoxChanged = (e) => {
         setcheckedBox(!checkedBox);
         e.stopPropagation();
+
     }
 
     useEffect(() => {
@@ -33,7 +47,7 @@ function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, se
 
     const openMail = () => {
         dispatch(selectMail({
-            mykey, time, description, subject, sender, senderMail, senderPhoto
+            mykey, time, description, subject, sender, senderMail, senderPhoto, starred
         }))
         navigate("/Mail")
     }
@@ -45,8 +59,8 @@ function EmailRow({ mykey, checkAll, setcheckAll, time, description, subject, se
                     <Checkbox onClick={checkBoxChanged} checked={checkedBox} size="small" />
                 </Tooltip>
 
-                <Tooltip title={starred ? "Starred" : "Not Starred"}>
-                    <Checkbox onClick={hadlestarClick} icon={<StarBorderOutlined />} checkedIcon={<Star className="emailRow__checkedStar" />} size="small" />
+                <Tooltip title={starredIcon ? "Starred" : "Not Starred"}>
+                    <Checkbox checked={starred ? true : false} id={mykey} onClick={hadlestarClick} icon={<StarBorderOutlined />} checkedIcon={<Star className="emailRow__checkedStar" />} size="small" />
                 </Tooltip>
 
 

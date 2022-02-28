@@ -8,10 +8,6 @@
   justify-content: space-between;
 }
 
-.sidebar {
-  transition: 0.3s all ease;
-}
-
 .sidebar:not(.sidebar--shrinked) {
   flex: 0.18;
   max-width: 300px;
@@ -28,7 +24,7 @@
 
 .rightSideBar {
   flex: 0.82;
-  transition: 0.3s all ease;
+  transition: 0.1s all ease;
   overflow: auto;
 }
 

@@ -27,7 +27,7 @@ function Login() {
         <div className='login'>
             <div className='login__container'>
                 <img src={googleicon} />
-                <Button variant="contained" onClick={signIn} className='login__button'><Google className='login__icon' /> Sign in with Google.</Button>
+                <Button variant="contained" onClick={signIn} className='login__button'><Google className='login__icon' /> Sign in with Google</Button>
             </div>
         </div>
     );

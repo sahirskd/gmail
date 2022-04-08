@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeSendMessageDialog, minimizeComposeModal, maximizeComposeModal, selectComposeModalIsMin } from '../features/mailSlice';
 import { selectUser } from '../features/userSlice';
 import { serverTimestamp } from "firebase/firestore";
-import { db } from './firebase';
+import { db, storageRef } from './firebase';
 import MicRecorder from 'mic-recorder-to-mp3';
+import firebase from 'firebase/compat/app';
 
 function ComposeMail() {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -21,6 +22,8 @@ function ComposeMail() {
     const dispatch = useDispatch();
 
     const [mailSub, setMailSub] = useState("")
+
+    const [mailMessage, setmailMessage] = useState("")
 
     const user = useSelector(selectUser);
 
@@ -53,13 +56,11 @@ function ComposeMail() {
         // db.collection('mails').onSnapshot(snapshot => {
         //     console.log("fire data", snapshot.docs.map(doc => doc.data()))
         // })
-
-
         dispatch(closeSendMessageDialog());
     }
 
     const startStopRecording = (e) => {
-        console.log(e.target.checked)
+        // console.log(e.target.checked)
         if (!micPermission) {
             return navigator.getUserMedia({ audio: true, video: false },
                 () => {
@@ -82,63 +83,80 @@ function ComposeMail() {
         } else {
             handleRecording(false)
         }
-
-        // recorder.start().then(() => {
-        //     // something else
-        // }).catch((e) => {
-        //     console.error(e);
-        // });
-
     }
-    const recordingAPI = async (url = '', data = {}) => {
-        // Default options are marked with *
+    const recordingAPI = async (url, audioURL) => {
+        // console.log(audioURL)
         const response = await fetch(url, {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            // credentials: 'same-origin', // include, *same-origin, omit
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            redirect: 'follow', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
+            body: JSON.stringify({ url: audioURL })
         });
-        return response.json(); // parses JSON response into native JavaScript objects
+        return response.json();
     }
-
-
 
     const handleRecording = (startRec) => {
         if (startRec) {
             recorder.start().then(() => {
                 // console.log("started recording")
-                // something else
             }).catch((e) => {
                 console.error(e);
             });
         } else {
             recorder.stop().getMp3().then(([buffer, blob]) => {
-                // do what ever you want with buffer and blob
-                // Example: Create a mp3 file and play
-                const file = new File(buffer, 'song.mp3', {
+
+                const file = new File(buffer, `voice-${(new Date()).getTime()}.mp3`, {
                     type: blob.type,
                     lastModified: Date.now()
                 });
+                // console.log(file)
+                // console.log(URL.createObjectURL(file))
 
+                var metadata = {
+                    contentType: 'audio/mp3'
+                };
 
-                recordingAPI('http://localhost:3300/api/deepgram', { file: file })
-                    .then(data => {
-                        console.log(data); // JSON data parsed by `data.json()` call
-                    });
+                var uploadTask = storageRef.child('audio/' + file.name).put(file, metadata);
 
-                console.log(blob)
-                console.log(file)
-                console.log(URL.createObjectURL(file))
-                // const player = new Audio(URL.createObjectURL(file));
-                // player.play();
-
+                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                    (snapshot) => {
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        // console.log('Upload is ' + progress + '% done');
+                    },
+                    (error) => {
+                        switch (error.code) {
+                            case 'storage/unauthorized':
+                                alert("You don't have permission")
+                                break;
+                            case 'storage/canceled':
+                                alert("You cancelld the voice")
+                                break;
+                            case 'storage/unknown':
+                                break;
+                        }
+                    },
+                    () => {
+                        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                            // console.log('File available at', downloadURL);
+                            console.log(downloadURL)
+                            recordingAPI('https://floating-crag-70091.herokuapp.com/api/deepgram', downloadURL)
+                                .then(data => {
+                                    // console.log(data.transcript); // data already parsed by `data.json()`
+                                    setmailMessage(mailMessage + " " + data.transcript);
+                                    storageRef.child('audio/' + file.name).delete().then(() => {
+                                        // File deleted successfully
+                                        // console.log("audio deleted from server");
+                                    }).catch((error) => {
+                                        // Uh-oh, an error occurred!
+                                        console.log(error)
+                                    });
+                                });
+                        });
+                    }
+                );
 
             }).catch((e) => {
                 alert('We could not retrieve your message');
@@ -147,11 +165,6 @@ function ComposeMail() {
 
         }
     }
-
-
-
-
-
 
 
     return (
@@ -168,14 +181,14 @@ function ComposeMail() {
                 </div>
             </div>
             <form onSubmit={handleSubmit(composeSubmit)}>
-                <input type="email" placeholder='Recipients' {...register("Recipients", { required: "Recipient is required" })} />
+                <input type="email" placeholder='Recipients' {...register("Recipients", { required: "Recipient is required!" })} />
                 {errors.Recipients && <p className='composeMail__errorMessage'>{errors.Recipients.message}</p>}
 
-                <input onKeyUp={(e) => setMailSub(e.target.value)} name='Subject' type="text" placeholder='Subject' {...register("Subject", { required: "Subject is required" })} />
+                <input onKeyUp={(e) => setMailSub(e.target.value)} name='Subject' type="text" placeholder='Subject' {...register("Subject", { required: "Subject is required!" })} />
                 {errors.Subject && <p className='composeMail__errorMessage'>{errors.Subject.message}</p>}
 
-                <textarea name='Message' type="text" placeholder='Message...' className='composeMail__message' {...register("Message", { required: "Message is required" })} />
-                {errors.Message && <p className='composeMail__errorMessage'>{errors.Message.message}</p>}
+                <textarea value={mailMessage} onChange={(e) => setmailMessage(e.target.value)} name='Message' type="text" placeholder='Message...' className='composeMail__message' />
+                {/* {!mailMessage && <p className='composeMail__errorMessage'>Message is required!</p>} */}
 
 
                 <div className='composeMail__footer'>

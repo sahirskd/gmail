@@ -39,7 +39,7 @@ function ComposeMail() {
             senderPhoto: user.userPhoto,
             senderMail: user.userEmail,
             subject: data.Subject,
-            message: data.Message,
+            message: mailMessage,
             starred: false,
             timestamp: serverTimestamp()
         }
